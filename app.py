@@ -1,12 +1,11 @@
 """
 BillMaster Pro - Main Flask Application
 Billing & Institute Management System
-Python/Flask Backend
+Python/Flask Backend - Vercel Serverless Compatible
 """
 
-from flask import Flask, redirect, session, send_from_directory
+from flask import Flask, redirect, session, send_from_directory, jsonify
 from flask_cors import CORS
-from flask_session import Session
 import os
 
 # Import route blueprints
@@ -22,14 +21,20 @@ from routes.settings import settings_bp
 app = Flask(__name__, static_folder='.')
 app.secret_key = os.environ.get('SECRET_KEY', 'billmaster_pro_secret_key_2024')
 
-# Session configuration
+# Session configuration - Use cookies for serverless
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_PERMANENT'] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = 86400  # 24 hours
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_COOKIE_HTTPONLY'] = True
-app.config['SESSION_COOKIE_SECURE'] = os.environ.get('RENDER', False)  # Use secure cookies in production
-Session(app)
+app.config['SESSION_COOKIE_SECURE'] = True if os.environ.get('VERCEL') else False
+
+# Try to use Flask-Session, fallback to basic sessions
+try:
+    from flask_session import Session
+    Session(app)
+except:
+    pass  # Use default Flask sessions
 
 # Enable CORS for all domains with credentials
 CORS(app, supports_credentials=True, resources={
@@ -61,7 +66,15 @@ def index():
 @app.route('/<path:filename>')
 def serve_static(filename):
     """Serve static files from the project directory"""
-    return send_from_directory('.', filename)
+    try:
+        return send_from_directory('.', filename)
+    except:
+        return redirect('/login.html')
+
+# Health check endpoint for Vercel
+@app.route('/api/health')
+def health_check():
+    return jsonify({'status': 'ok', 'message': 'BillMaster Pro is running'})
 
 # Error handlers
 @app.errorhandler(404)
@@ -72,6 +85,7 @@ def not_found(e):
 def server_error(e):
     return {'success': False, 'message': 'Internal server error'}, 500
 
+# For local development
 if __name__ == '__main__':
     print("=" * 60)
     print("  BillMaster Pro - Python/Flask Backend")
