@@ -20,7 +20,7 @@ from routes.settings import settings_bp
 
 # Initialize Flask app
 app = Flask(__name__, static_folder='.')
-app.secret_key = 'billmaster_pro_secret_key_2024'
+app.secret_key = os.environ.get('SECRET_KEY', 'billmaster_pro_secret_key_2024')
 
 # Session configuration
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -28,6 +28,7 @@ app.config['SESSION_PERMANENT'] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = 86400  # 24 hours
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SECURE'] = os.environ.get('RENDER', False)  # Use secure cookies in production
 Session(app)
 
 # Enable CORS for all domains with credentials
