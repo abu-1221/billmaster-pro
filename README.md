@@ -196,14 +196,24 @@ The application comes pre-loaded with:
 
 ---
 
-## 📞 Support
-
-For issues or questions:
-
-1. Make sure Python 3.8+ is installed
-2. Verify all dependencies are installed (`pip install -r requirements.txt`)
-3. Ensure port 5000 is not in use by another application
-
 ---
+
+## 🌐 Deployment
+
+### Deploy to Render (Recommended)
+
+You can deploy this project to Render for free! Render will automatically detect the `render.yaml` file and set up everything for you.
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/abu-1221/billmaster-pro)
+
+**Note:** For data persistence on Render's free tier, the SQLite database will reset on every deployment. For permanent storage, consider using Render's persistent disks or a managed PostgreSQL database.
+
+### Deploy to Vercel
+
+The project is also configured for Vercel. You can deploy it using the Vercel CLI:
+
+```bash
+vercel deploy --prod
+```
 
 **BillMaster Pro** - Built with ❤️ using Python/Flask + SQLite
