@@ -8,12 +8,11 @@ const isFileProtocol = window.location.protocol === 'file:';
 
 // Auto-detect API base URL - Python Flask backend
 const API_BASE = (() => {
-    if (isFileProtocol) {
-        // Show warning if opened from file system
-        console.warn('⚠️ BillMaster Pro must be accessed through a web server (e.g., http://localhost:5000)');
-        return 'http://localhost:5000/api'; // Python Flask backend
+    // If running from file system, use localhost:5000 as fallback
+    if (window.location.protocol === 'file:') {
+        return 'http://localhost:5000/api';
     }
-    // Use current origin + /api for server-based access
+    // For local and hosted servers, use relative path
     return window.location.origin + '/api';
 })();
 
