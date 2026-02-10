@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="BillMaster Pro - Create New Bill" />
+    <title>New Bill | BillMaster Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <link rel="stylesheet" href="assets/css/billing.css" />
+  </head>
+  <body>
+    <div class="app-layout">
+      <div class="mobile-overlay"></div>
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <button class="sidebar-close" onclick="closeSidebar()">×</button>
+        <div class="sidebar-header">
+          <div class="sidebar-logo">💼</div>
+          <div class="sidebar-brand">
+            <h1>BillMaster</h1>
+            <span>Pro Billing</span>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <div class="nav-section">
+            <div class="nav-section-title">Menu</div>
+            <a href="dashboard.html" class="nav-item">
+              <span class="nav-item-icon">📊</span>
+              <span class="nav-item-text">Dashboard</span>
+            </a>
+            <a href="billing.html" class="nav-item active">
+              <span class="nav-item-icon">🧾</span>
+              <span class="nav-item-text">New Bill</span>
+            </a>
+            <a href="invoices.html" class="nav-item">
+              <span class="nav-item-icon">📋</span>
+              <span class="nav-item-text">Invoices</span>
+            </a>
+          </div>
+
+          <div class="nav-section">
+            <div class="nav-section-title">Manage</div>
+            <a href="products.html" class="nav-item">
+              <span class="nav-item-icon">📦</span>
+              <span class="nav-item-text">Products</span>
+            </a>
+            <a href="customers.html" class="nav-item">
+              <span class="nav-item-icon">👥</span>
+              <span class="nav-item-text">Customers</span>
+            </a>
+            <a href="categories.html" class="nav-item">
+              <span class="nav-item-icon">🏷️</span>
+              <span class="nav-item-text">Categories</span>
+            </a>
+          </div>
+
+          <div class="nav-section">
+            <div class="nav-section-title">System</div>
+            <a href="settings.html" class="nav-item">
+              <span class="nav-item-icon">⚙️</span>
+              <span class="nav-item-text">Settings</span>
+            </a>
+          </div>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="user-profile" onclick="BillMaster.auth.logout()">
+            <div class="user-avatar">AD</div>
+            <div class="user-info">
+              <div class="user-name">Admin</div>
+              <div class="user-role">Logout</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <header class="main-header">
+          <div class="header-left">
+            <button class="sidebar-toggle" onclick="openSidebar()">☰</button>
+            <h2 class="page-title">🧾 New Bill</h2>
+          </div>
+          <div class="header-right">
+            <span
+              style="color: var(--text-muted); font-size: 0.8125rem"
+              id="dateTime"
+            ></span>
+          </div>
+        </header>
+
+        <div class="page-content">
+          <div class="billing-container">
+            <!-- Products -->
+            <div class="product-section">
+              <div class="product-header">
+                <div class="product-search">
+                  <span class="product-search-icon">🔍</span>
+                  <input
+                    type="text"
+                    id="productSearch"
+                    placeholder="Search menu..."
+                  />
+                </div>
+                <!-- Category filters hidden for a cleaner all-product view -->
+                <div
+                  class="category-filter"
+                  id="categoryFilters"
+                  style="display: none"
+                >
+                  <button class="category-btn active" data-id="">All</button>
+                </div>
+              </div>
+              <div class="product-grid" id="productGrid"></div>
+            </div>
+
+            <!-- Cart -->
+            <div class="cart-section">
+              <div class="cart-header">
+                <h3 class="cart-title">
+                  <span>🛒</span>
+                  <span>Cart</span>
+                  <span class="cart-count" id="cartCount">0</span>
+                </h3>
+                <button class="btn btn-sm btn-ghost" onclick="clearCart()">
+                  Clear
+                </button>
+              </div>
+
+              <div class="customer-select">
+                <input
+                  type="text"
+                  id="customerSearch"
+                  class="customer-select-input"
+                  placeholder="👤 Customer (optional)"
+                />
+                <div
+                  id="customerDropdown"
+                  class="customer-dropdown"
+                  style="display: none"
+                ></div>
+                <div id="selectedCustomer" style="display: none"></div>
+              </div>
+
+              <div class="cart-items" id="cartItems">
+                <div class="cart-empty">
+                  <div class="cart-empty-icon">🛒</div>
+                  <p>Cart is empty</p>
+                </div>
+              </div>
+
+              <!-- Cart Footer - Fixed at Bottom -->
+              <div class="cart-footer">
+                <div class="cart-summary" id="cartSummary">
+                  <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal">₹0.00</span>
+                  </div>
+                  <div class="summary-row total">
+                    <span>Total</span>
+                    <span class="amount" id="total">₹0.00</span>
+                  </div>
+                </div>
+
+                <div class="cart-actions">
+                  <button class="btn btn-secondary" onclick="clearCart()">
+                    Cancel
+                  </button>
+                  <button
+                    class="btn btn-success"
+                    onclick="openPayment()"
+                    id="checkoutBtn"
+                    disabled
+                  >
+                    <span>💳</span>
+                    <span>Pay</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal-overlay" id="paymentModal">
+      <div class="modal" style="max-width: 520px">
+        <div class="modal-header">
+          <h3 class="modal-title">💳 Pay</h3>
+          <button
+            class="modal-close"
+            onclick="BillMaster.modal.close('paymentModal')"
+          >
+            ×
+          </button>
+        </div>
+        <div class="modal-body" style="padding: var(--space-lg)">
+          <!-- Order Summary -->
+          <div
+            id="paymentSummary"
+            style="
+              background: var(--bg-tertiary);
+              padding: var(--space-md);
+              border-radius: var(--radius-md);
+              margin-bottom: var(--space-lg);
+            "
+          ></div>
+
+          <!-- Payment Method Tabs -->
+          <div class="pay-method-tabs">
+            <button
+              class="pay-tab active"
+              data-method="cash"
+              onclick="switchPayTab('cash')"
+            >
+              <span class="pay-tab-icon">💵</span>
+              <span class="pay-tab-label">Cash</span>
+            </button>
+            <button
+              class="pay-tab"
+              data-method="card"
+              onclick="switchPayTab('card')"
+            >
+              <span class="pay-tab-icon">💳</span>
+              <span class="pay-tab-label">Card</span>
+            </button>
+            <button
+              class="pay-tab"
+              data-method="upi"
+              onclick="switchPayTab('upi')"
+            >
+              <span class="pay-tab-icon">📱</span>
+              <span class="pay-tab-label">UPI</span>
+            </button>
+          </div>
+
+          <!-- Cash Panel -->
+          <div class="pay-panel active" id="panelCash">
+            <div class="pay-panel-title">💵 Cash Payment</div>
+            <div class="form-group" style="margin-bottom: var(--space-md)">
+              <label class="form-label">Total Amount</label>
+              <div class="pay-total-display" id="cashTotal">₹0.00</div>
+            </div>
+            <div class="form-group" style="margin-bottom: var(--space-md)">
+              <label class="form-label">Cash Received</label>
+              <input
+                type="number"
+                id="cashReceived"
+                class="form-input pay-cash-input"
+                placeholder="Enter amount received"
+                min="0"
+                step="0.01"
+                oninput="calculateChange()"
+              />
+            </div>
+            <div class="pay-change-box" id="changeBox" style="display: none">
+              <div class="pay-change-row">
+                <span>Cash Received</span>
+                <span id="changeReceived">₹0.00</span>
+              </div>
+              <div class="pay-change-row">
+                <span>Bill Amount</span>
+                <span id="changeBill">₹0.00</span>
+              </div>
+              <div
+                class="pay-change-row pay-change-result"
+                id="changeResultRow"
+              >
+                <span id="changeLabel">Change to Return</span>
+                <span id="changeAmount">₹0.00</span>
+              </div>
+            </div>
+            <!-- Quick cash buttons -->
+            <div class="pay-quick-cash" id="quickCashBtns"></div>
+          </div>
+
+          <!-- Card Panel -->
+          <div class="pay-panel" id="panelCard">
+            <div class="pay-panel-title">💳 Card Payment</div>
+            <div class="form-group" style="margin-bottom: var(--space-md)">
+              <label class="form-label">Total Amount</label>
+              <div class="pay-total-display" id="cardTotal">₹0.00</div>
+            </div>
+            <div class="form-group" style="margin-bottom: var(--space-md)">
+              <label class="form-label">Card Number</label>
+              <input
+                type="text"
+                id="cardNumber"
+                class="form-input"
+                placeholder="•••• •••• •••• ••••"
+                maxlength="19"
+                oninput="formatCardNumber(this)"
+              />
+            </div>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: var(--space-md);
+                margin-bottom: var(--space-md);
+              "
+            >
+              <div class="form-group" style="margin-bottom: 0">
+                <label class="form-label">Expiry</label>
+                <input
+                  type="text"
+                  id="cardExpiry"
+                  class="form-input"
+                  placeholder="MM/YY"
+                  maxlength="5"
+                  oninput="formatExpiry(this)"
+                />
+              </div>
+              <div class="form-group" style="margin-bottom: 0">
+                <label class="form-label">CVV</label>
+                <input
+                  type="password"
+                  id="cardCvv"
+                  class="form-input"
+                  placeholder="•••"
+                  maxlength="4"
+                />
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 0">
+              <label class="form-label">Cardholder Name</label>
+              <input
+                type="text"
+                id="cardHolder"
+                class="form-input"
+                placeholder="Name on card"
+              />
+            </div>
+          </div>
+
+          <!-- UPI Panel -->
+          <div class="pay-panel" id="panelUpi">
+            <div class="pay-panel-title">📱 UPI Payment</div>
+            <div class="form-group" style="margin-bottom: var(--space-md)">
+              <label class="form-label">Total Amount</label>
+              <div class="pay-total-display" id="upiTotal">₹0.00</div>
+            </div>
+            <div class="pay-upi-qr">
+              <div class="pay-upi-qr-placeholder">
+                <span style="font-size: 3rem">📷</span>
+                <span
+                  style="
+                    font-size: 0.8125rem;
+                    color: var(--text-muted);
+                    margin-top: var(--space-xs);
+                  "
+                  >Scan QR to Pay</span
+                >
+              </div>
+            </div>
+            <div class="pay-upi-divider">
+              <span>OR</span>
+            </div>
+            <div class="form-group" style="margin-bottom: 0">
+              <label class="form-label">UPI ID / Mobile Number</label>
+              <input
+                type="text"
+                id="upiId"
+                class="form-input"
+                placeholder="example@upi or 9876543210"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            class="btn btn-secondary"
+            onclick="BillMaster.modal.close('paymentModal')"
+          >
+            Cancel
+          </button>
+          <button
+            class="btn btn-success"
+            id="confirmPayBtn"
+            onclick="processPayment()"
+          >
+            <span>✅</span>
+            <span>Confirm Payment</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+    <script>
+      let products = [],
+        categories = [],
+        cart = [],
+        customers = [],
+        selectedCustomer = null;
+
+      // Sidebar Functions
+      function openSidebar() {
+        document.querySelector(".sidebar").classList.add("open");
+        document.querySelector(".mobile-overlay").classList.add("active");
+      }
+
+      function closeSidebar() {
+        document.querySelector(".sidebar").classList.remove("open");
+        document.querySelector(".mobile-overlay").classList.remove("active");
+      }
+
+      // Close sidebar when clicking overlay
+      document
+        .querySelector(".mobile-overlay")
+        .addEventListener("click", closeSidebar);
+
+      // Update time
+      function updateTime() {
+        document.getElementById("dateTime").textContent =
+          new Date().toLocaleString("en-IN", {
+            weekday: "short",
+            day: "numeric",
+            month: "short",
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+      }
+      updateTime();
+      setInterval(updateTime, 60000);
+
+      // Init
+      document.addEventListener("DOMContentLoaded", async () => {
+        await BillMaster.auth.requireAuth();
+        await initUserInfo();
+        await loadData();
+        initSearch();
+        initCustomerSearch();
+      });
+
+      async function loadData() {
+        const [catRes, prodRes, custRes] = await Promise.all([
+          BillMaster.api.get("categories.php?action=list"),
+          BillMaster.api.get("products.php?action=list"),
+          BillMaster.api.get("customers.php?action=list"),
+        ]);
+
+        if (catRes.success) {
+          categories = catRes.data;
+          renderCategories();
+        }
+        if (prodRes.success) {
+          products = prodRes.data;
+          renderProducts();
+        }
+        if (custRes.success) customers = custRes.data;
+      }
+
+      function renderCategories() {
+        const container = document.getElementById("categoryFilters");
+        container.innerHTML =
+          '<button class="category-btn active" data-id="">All</button>' +
+          categories
+            .map(
+              (c) =>
+                `<button class="category-btn" data-id="${c.id}">${BillMaster.utils.escapeHtml(c.name)}</button>`,
+            )
+            .join("");
+
+        container.querySelectorAll(".category-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            container
+              .querySelectorAll(".category-btn")
+              .forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            renderProducts(btn.dataset.id);
+          });
+        });
+      }
+
+      function renderProducts(categoryId = "") {
+        const search = document
+          .getElementById("productSearch")
+          .value.toLowerCase();
+        const filtered = products.filter((p) => {
+          const matchCat = !categoryId || p.category_id == categoryId;
+          const matchSearch = !search || p.name.toLowerCase().includes(search);
+          return matchCat && matchSearch;
+        });
+
+        const container = document.getElementById("productGrid");
+        if (!filtered.length) {
+          container.innerHTML =
+            '<div class="empty-state"><p>No products found</p></div>';
+          return;
+        }
+
+        container.innerHTML = filtered
+          .map(
+            (p) => `
+          <div class="product-card ${p.stock_quantity <= 0 ? "out-of-stock" : ""}" 
+               onclick="${p.stock_quantity > 0 ? `addToCart(${p.id})` : ""}" 
+               title="${BillMaster.utils.escapeHtml(p.description || "")}"
+               ${p.image_url ? "" : 'style="display:none"'}>
+            <div class="product-card-img-container">
+              ${p.image_url ? `<img src="${p.image_url}" class="product-card-img" alt="${p.name}" onerror="this.closest('.product-card').style.display='none'">` : ""}
+              <div class="product-card-price-badge">${BillMaster.utils.formatCurrency(p.price)}</div>
+            </div>
+            <div class="product-card-info">
+              <div class="product-card-name">${BillMaster.utils.escapeHtml(p.name)}</div>
+              <div class="product-card-desc">${BillMaster.utils.escapeHtml(p.description || "Authentic South Indian culinary masterpiece.")}</div>
+            </div>
+          </div>
+        `,
+          )
+          .join("");
+      }
+
+      function initSearch() {
+        document.getElementById("productSearch").addEventListener(
+          "input",
+          BillMaster.utils.debounce(() => {
+            const activeBtn = document.querySelector(".category-btn.active");
+            renderProducts(activeBtn?.dataset.id || "");
+          }, 200),
+        );
+      }
+
+      function initCustomerSearch() {
+        const input = document.getElementById("customerSearch");
+        const dropdown = document.getElementById("customerDropdown");
+
+        input.addEventListener("input", () => {
+          const val = input.value.toLowerCase();
+          if (!val) {
+            dropdown.style.display = "none";
+            return;
+          }
+
+          const matches = customers.filter(
+            (c) =>
+              c.name.toLowerCase().includes(val) ||
+              (c.phone && c.phone.includes(val)),
+          );
+          if (matches.length) {
+            dropdown.innerHTML = matches
+              .slice(0, 5)
+              .map(
+                (c) => `
+              <div class="customer-option" onclick="selectCustomer(${c.id})">${BillMaster.utils.escapeHtml(c.name)} ${c.phone ? "- " + c.phone : ""}</div>
+            `,
+              )
+              .join("");
+            dropdown.style.display = "block";
+          } else dropdown.style.display = "none";
+        });
+
+        document.addEventListener("click", (e) => {
+          if (!e.target.closest(".customer-select"))
+            dropdown.style.display = "none";
+        });
+      }
+
+      function selectCustomer(id) {
+        selectedCustomer = customers.find((c) => c.id == id);
+        document.getElementById("customerSearch").style.display = "none";
+        document.getElementById("customerDropdown").style.display = "none";
+        document.getElementById("selectedCustomer").style.display = "block";
+        document.getElementById("selectedCustomer").innerHTML = `
+          <div class="selected-customer">
+            <span class="selected-customer-info">👤 ${BillMaster.utils.escapeHtml(selectedCustomer.name)}</span>
+            <button class="selected-customer-remove" onclick="removeCustomer()">×</button>
+          </div>`;
+      }
+
+      function removeCustomer() {
+        selectedCustomer = null;
+        document.getElementById("customerSearch").style.display = "block";
+        document.getElementById("customerSearch").value = "";
+        document.getElementById("selectedCustomer").style.display = "none";
+      }
+
+      function addToCart(productId) {
+        const product = products.find((p) => p.id == productId);
+        if (!product || product.stock_quantity <= 0) return;
+
+        const existing = cart.find((i) => i.product_id == productId);
+        if (existing) {
+          if (existing.quantity < product.stock_quantity) existing.quantity++;
+          else {
+            BillMaster.toast.warning("Maximum stock reached");
+            return;
+          }
+        } else {
+          cart.push({
+            product_id: productId,
+            name: product.name,
+            price: parseFloat(product.price),
+            quantity: 1,
+            unit: product.unit,
+            max: product.stock_quantity,
+          });
+        }
+        renderCart();
+      }
+
+      function updateQty(productId, delta) {
+        const item = cart.find((i) => i.product_id == productId);
+        if (!item) return;
+
+        item.quantity += delta;
+        if (item.quantity <= 0)
+          cart = cart.filter((i) => i.product_id != productId);
+        else if (item.quantity > item.max) {
+          item.quantity = item.max;
+          BillMaster.toast.warning("Maximum stock reached");
+        }
+        renderCart();
+      }
+
+      function removeFromCart(productId) {
+        cart = cart.filter((i) => i.product_id != productId);
+        renderCart();
+      }
+
+      function clearCart() {
+        cart = [];
+        removeCustomer();
+        renderCart();
+      }
+
+      function renderCart() {
+        const container = document.getElementById("cartItems");
+        const countEl = document.getElementById("cartCount");
+        const subtotalEl = document.getElementById("subtotal");
+        const totalEl = document.getElementById("total");
+        const checkoutBtn = document.getElementById("checkoutBtn");
+
+        countEl.textContent = cart.reduce((sum, i) => sum + i.quantity, 0);
+
+        if (!cart.length) {
+          container.innerHTML =
+            '<div class="cart-empty"><div class="cart-empty-icon">🛒</div><p>Cart is empty</p></div>';
+          subtotalEl.textContent = "₹0.00";
+          totalEl.textContent = "₹0.00";
+          checkoutBtn.disabled = true;
+          return;
+        }
+
+        const subtotal = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+        subtotalEl.textContent = BillMaster.utils.formatCurrency(subtotal);
+        totalEl.textContent = BillMaster.utils.formatCurrency(subtotal);
+        checkoutBtn.disabled = false;
+
+        container.innerHTML = cart
+          .map(
+            (i) => `
+          <div class="cart-item">
+            <div class="cart-item-info">
+              <div class="cart-item-name">${BillMaster.utils.escapeHtml(i.name)}</div>
+              <div class="cart-item-price">${BillMaster.utils.formatCurrency(i.price)} × ${i.quantity}</div>
+            </div>
+            <div class="cart-item-qty">
+              <button class="qty-btn" onclick="updateQty(${i.product_id}, -1)">−</button>
+              <span class="qty-value">${i.quantity}</span>
+              <button class="qty-btn" onclick="updateQty(${i.product_id}, 1)">+</button>
+            </div>
+            <div class="cart-item-total">${BillMaster.utils.formatCurrency(i.price * i.quantity)}</div>
+            <button class="cart-item-remove" onclick="removeFromCart(${i.product_id})">×</button>
+          </div>
+        `,
+          )
+          .join("");
+      }
+
+      function openPayment() {
+        if (!cart.length) return;
+        const total = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+        const totalFormatted = BillMaster.utils.formatCurrency(total);
+        const itemCount = cart.reduce((s, i) => s + i.quantity, 0);
+
+        // Populate summary
+        document.getElementById("paymentSummary").innerHTML = `
+          <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-sm); font-size: 0.875rem;">
+            <span style="color: var(--text-muted);">Items</span><span style="font-weight: 600;">${itemCount}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 1.25rem; font-weight: 700;">
+            <span>Total</span><span style="color: var(--success);">${totalFormatted}</span>
+          </div>
+          ${selectedCustomer ? `<div style="margin-top: var(--space-sm); font-size: 0.8125rem; color: var(--text-muted);">👤 ${BillMaster.utils.escapeHtml(selectedCustomer.name)}</div>` : ""}
+        `;
+
+        // Set totals in each panel
+        document.getElementById("cashTotal").textContent = totalFormatted;
+        document.getElementById("cardTotal").textContent = totalFormatted;
+        document.getElementById("upiTotal").textContent = totalFormatted;
+
+        // Reset fields
+        document.getElementById("cashReceived").value = "";
+        document.getElementById("changeBox").style.display = "none";
+        document.getElementById("cardNumber").value = "";
+        document.getElementById("cardExpiry").value = "";
+        document.getElementById("cardCvv").value = "";
+        document.getElementById("cardHolder").value = "";
+        document.getElementById("upiId").value = "";
+
+        // Generate quick cash buttons
+        generateQuickCash(total);
+
+        // Reset to Cash tab
+        switchPayTab("cash");
+
+        BillMaster.modal.open("paymentModal");
+      }
+
+      // --- Payment Tab Switching ---
+      function switchPayTab(method) {
+        // Update tab buttons
+        document
+          .querySelectorAll(".pay-tab")
+          .forEach((t) => t.classList.remove("active"));
+        document
+          .querySelector(`.pay-tab[data-method="${method}"]`)
+          .classList.add("active");
+
+        // Update panels
+        document
+          .querySelectorAll(".pay-panel")
+          .forEach((p) => p.classList.remove("active"));
+        const panelId =
+          "panel" + method.charAt(0).toUpperCase() + method.slice(1);
+        document.getElementById(panelId).classList.add("active");
+      }
+
+      // --- Cash: Calculate Change ---
+      function calculateChange() {
+        const total = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+        const received =
+          parseFloat(document.getElementById("cashReceived").value) || 0;
+        const changeBox = document.getElementById("changeBox");
+
+        if (received > 0) {
+          changeBox.style.display = "block";
+          document.getElementById("changeReceived").textContent =
+            BillMaster.utils.formatCurrency(received);
+          document.getElementById("changeBill").textContent =
+            BillMaster.utils.formatCurrency(total);
+
+          const change = received - total;
+          const resultRow = document.getElementById("changeResultRow");
+          const changeLabel = document.getElementById("changeLabel");
+          const changeAmount = document.getElementById("changeAmount");
+
+          if (change >= 0) {
+            changeLabel.textContent = "Change to Return";
+            changeAmount.textContent = BillMaster.utils.formatCurrency(change);
+            resultRow.classList.remove("insufficient");
+            resultRow.classList.add("success");
+          } else {
+            changeLabel.textContent = "Amount Short";
+            changeAmount.textContent = BillMaster.utils.formatCurrency(
+              Math.abs(change),
+            );
+            resultRow.classList.remove("success");
+            resultRow.classList.add("insufficient");
+          }
+        } else {
+          changeBox.style.display = "none";
+        }
+      }
+
+      // --- Quick Cash Buttons ---
+      function generateQuickCash(total) {
+        const container = document.getElementById("quickCashBtns");
+        // Round up to nearest useful denominations
+        const suggestions = [];
+        const rounded = Math.ceil(total);
+        suggestions.push(rounded);
+
+        // Add common round-ups
+        const roundUps = [10, 50, 100, 500, 1000, 2000];
+        for (const r of roundUps) {
+          const val = Math.ceil(total / r) * r;
+          if (val > total && !suggestions.includes(val)) suggestions.push(val);
+          if (suggestions.length >= 4) break;
+        }
+
+        // Add exact amount
+        container.innerHTML =
+          '<span style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px;">Quick amounts:</span>' +
+          '<div style="display: flex; gap: var(--space-xs); flex-wrap: wrap;">' +
+          suggestions
+            .map(
+              (v) =>
+                `<button type="button" class="pay-quick-btn" onclick="setQuickCash(${v})">${BillMaster.utils.formatCurrency(v)}</button>`,
+            )
+            .join("") +
+          "</div>";
+      }
+
+      function setQuickCash(amount) {
+        document.getElementById("cashReceived").value = amount;
+        calculateChange();
+      }
+
+      // --- Card: Format Helpers ---
+      function formatCardNumber(el) {
+        let val = el.value.replace(/\D/g, "");
+        val = val.replace(/(\d{4})(?=\d)/g, "$1 ");
+        el.value = val.substring(0, 19);
+      }
+
+      function formatExpiry(el) {
+        let val = el.value.replace(/\D/g, "");
+        if (val.length >= 2) val = val.substring(0, 2) + "/" + val.substring(2);
+        el.value = val.substring(0, 5);
+      }
+
+      async function processPayment() {
+        const subtotal = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+        // Determine active payment method
+        const activeTab = document.querySelector(".pay-tab.active");
+        const paymentMethod = activeTab ? activeTab.dataset.method : "cash";
+
+        // Validate based on method
+        if (paymentMethod === "cash") {
+          const received =
+            parseFloat(document.getElementById("cashReceived").value) || 0;
+          if (received < subtotal) {
+            BillMaster.toast.warning(
+              "Cash received is less than the total amount!",
+            );
+            return;
+          }
+        } else if (paymentMethod === "card") {
+          const cardNum = document
+            .getElementById("cardNumber")
+            .value.replace(/\s/g, "");
+          const cardExpiry = document.getElementById("cardExpiry").value;
+          const cardCvv = document.getElementById("cardCvv").value;
+          if (cardNum.length < 16 || !cardExpiry || !cardCvv) {
+            BillMaster.toast.warning("Please fill in all card details!");
+            return;
+          }
+        } else if (paymentMethod === "upi") {
+          const upiId = document.getElementById("upiId").value.trim();
+          if (!upiId) {
+            BillMaster.toast.warning(
+              "Please enter your UPI ID or mobile number!",
+            );
+            return;
+          }
+        }
+
+        const data = {
+          customer_id: selectedCustomer?.id || null,
+          items: cart.map((i) => ({
+            product_id: i.product_id,
+            quantity: i.quantity,
+            unit_price: i.price,
+          })),
+          subtotal: subtotal,
+          total_amount: subtotal,
+          payment_method: paymentMethod,
+          payment_status: "paid",
+        };
+
+        const result = await BillMaster.api.post(
+          "invoices.php?action=create",
+          data,
+        );
+        if (result.success) {
+          BillMaster.toast.success("Payment successful! Invoice created.");
+          BillMaster.modal.close("paymentModal");
+          clearCart();
+          await loadData();
+
+          if (confirm("Invoice created! Do you want to print it?")) {
+            window.open(`invoices.html?print=${result.invoice_id}`, "_blank");
+          }
+        } else {
+          BillMaster.toast.error(result.message || "Failed to create invoice");
+        }
+      }
+    </script>
+  </body>
+</html>
