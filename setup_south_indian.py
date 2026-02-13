@@ -54,7 +54,7 @@ def setup_exclusive_menu():
         ('Zesty Lemon Rice', 95, 'Fluffy rice infused with lemon, turmeric, and crunchy peanuts', 
          'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&q=80&w=800'),
         ('Creamy Curd Rice', 80, 'Traditional temple-style yogurt rice with pomegranate', 
-         'https://images.unsplash.com/photo-1588675646184-f5b0b0b0b2de?auto=format&fit=crop&q=80&w=800'),
+         'https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&q=80&w=800'),
         ('Chettinad Veg Biryani', 230, 'Spicy and aromatic biryani made with Chettinad spices', 
          'https://images.unsplash.com/photo-1563379091339-03b21bc4a6f8?auto=format&fit=crop&q=80&w=800'),
         ('Crispy Paniyaram (6 pcs)', 90, 'Small shallow-fried balls of fermented rice batter', 

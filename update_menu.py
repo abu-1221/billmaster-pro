@@ -53,7 +53,7 @@ def update_menu():
         ('Lemon Rice', 90, 'Tangy turmeric rice with peanuts and curry leaves', 
          'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&q=80&w=600'),
         ('Curd Rice', 80, 'Classic South Indian yogurt rice tempered with mustard', 
-         'https://images.unsplash.com/photo-1588675646184-f5b0b0b0b2de?auto=format&fit=crop&q=80&w=600'),
+         'https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&q=80&w=600'),
         ('Paper Roast Dosa', 150, 'Ultra-thin long crispy golden dosa', 
          'https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?auto=format&fit=crop&q=80&w=600'),
         ('Kerala Parotta', 100, 'Hand-tossed flaky multi-layered flatbread', 

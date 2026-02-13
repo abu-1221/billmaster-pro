@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="BillMaster Pro - Expense Management" />
+    <title>Expenses | BillMaster Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body>
+    <div class="app-layout">
+      <div class="mobile-overlay"></div>
+
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="sidebar-logo"><i data-lucide="briefcase"></i></div>
+          <div class="sidebar-brand">
+            <h1>BillMaster</h1>
+            <span>Pro Billing</span>
+          </div>
+        </div>
+        <nav class="sidebar-nav">
+          <div class="nav-section">
+            <div class="nav-section-title">Menu</div>
+            <a href="dashboard.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="layout-dashboard" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Dashboard</span>
+            </a>
+            <a href="billing.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="receipt" class="icon"></i
+              ></span>
+              <span class="nav-item-text">New Bill</span>
+            </a>
+            <a href="invoices.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="file-text" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Invoices</span>
+            </a>
+            <a href="expenses.html" class="nav-item active">
+              <span class="nav-item-icon"
+                ><i data-lucide="credit-card" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Expenses</span>
+            </a>
+          </div>
+          <div class="nav-section">
+            <div class="nav-section-title">Manage</div>
+            <a href="products.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="package" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Products</span>
+            </a>
+            <a href="customers.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="users" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Customers</span>
+            </a>
+            <a href="categories.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="tag" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Categories</span>
+            </a>
+          </div>
+          <div class="nav-section">
+            <div class="nav-section-title">System</div>
+            <a href="settings.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="settings" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Settings</span>
+            </a>
+          </div>
+        </nav>
+        <div class="sidebar-footer">
+          <div class="user-profile" onclick="BillMaster.auth.logout()">
+            <div class="user-avatar">AD</div>
+            <div class="user-info">
+              <div class="user-name">Admin</div>
+              <div class="user-role">Logout</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="main-header">
+          <div class="header-left">
+            <button class="sidebar-toggle"><i data-lucide="menu"></i></button>
+            <h2 class="page-title">
+              <i data-lucide="credit-card" class="icon-lg"></i> Expenses
+            </h2>
+          </div>
+          <div class="header-right">
+            <button class="btn btn-primary" onclick="openModal()">
+              <i data-lucide="plus" class="icon"></i>
+              <span>Add Expense</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="page-content">
+          <div class="card-grid" style="margin-bottom: var(--space-xl)">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <div class="stat-card-icon danger">
+                  <i data-lucide="wallet" class="icon"></i>
+                </div>
+              </div>
+              <div class="stat-card-value" id="monthExpenses">₹0</div>
+              <div class="stat-card-label">Expenses This Month</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <div class="stat-card-icon primary">
+                  <i data-lucide="trending-down" class="icon"></i>
+                </div>
+              </div>
+              <div class="stat-card-value" id="totalExpenses">₹0</div>
+              <div class="stat-card-label">Lifetime Expenses</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <div class="stat-card-icon warning">
+                  <i data-lucide="calendar" class="icon"></i>
+                </div>
+              </div>
+              <div class="stat-card-value" id="dailyAvg">₹0</div>
+              <div class="stat-card-label">Daily Average (Month)</div>
+            </div>
+          </div>
+
+          <div class="glass-card animate-slide" style="animation-delay: 100ms">
+            <div
+              class="section-header"
+              style="padding: var(--space-lg) var(--space-lg) 0"
+            >
+              <h3 class="section-title">Expense Log</h3>
+            </div>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Title & Description</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="expensesTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Expense Modal -->
+    <div class="modal-overlay" id="expenseModal">
+      <div class="modal" style="max-width: 500px">
+        <div class="modal-header">
+          <h3 class="modal-title">Add Expense</h3>
+          <button
+            class="modal-close"
+            onclick="BillMaster.modal.close('expenseModal')"
+          >
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Title *</label>
+            <input
+              type="text"
+              id="expenseTitle"
+              class="form-input"
+              placeholder="Enter title (e.g. Rent, Electricity)"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Amount *</label>
+            <input
+              type="number"
+              id="expenseAmount"
+              class="form-input"
+              placeholder="0.00"
+              step="0.01"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <select id="expenseCategory" class="form-select">
+              <option value="general">General</option>
+              <option value="bills">Bills & Utilities</option>
+              <option value="rent">Rent</option>
+              <option value="salary">Staff Salary</option>
+              <option value="inventory">Inventory Purchase</option>
+              <option value="marketing">Marketing</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Date</label>
+            <input type="date" id="expenseDate" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea
+              id="expenseDescription"
+              class="form-textarea"
+              placeholder="Optional details"
+            ></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-secondary"
+            onclick="BillMaster.modal.close('expenseModal')"
+          >
+            Cancel
+          </button>
+          <button class="btn btn-primary" onclick="saveExpense()">
+            Save Expense
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+    <script>
+      let expenses = [];
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        const user = await BillMaster.auth.requireAuth();
+        if (user && user.role !== "admin") {
+          window.location.replace("billing.html");
+          return;
+        }
+
+        await initUserInfo();
+
+        // Set default date to today
+        document.getElementById("expenseDate").valueAsDate = new Date();
+        lucide.createIcons();
+        await loadExpenses();
+      });
+
+      async function loadExpenses() {
+        const result = await BillMaster.api.get("expenses.php?action=list");
+        if (result.success) {
+          expenses = result.data;
+          renderExpenses();
+          calculateStats();
+        }
+      }
+
+      function renderExpenses() {
+        const tbody = document.getElementById("expensesTable");
+        const categoryIcons = {
+          general: "package",
+          bills: "zap",
+          rent: "home",
+          salary: "user",
+          inventory: "shopping-cart",
+          marketing: "megaphone",
+          other: "sparkles",
+        };
+
+        if (!expenses.length) {
+          tbody.innerHTML =
+            '<tr><td colspan="5" style="text-align: center; padding: var(--space-2xl); color: var(--text-muted);">No expenses recorded yet</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = expenses
+          .map(
+            (e, i) => `
+                <tr class="animate-slide" style="animation-delay: ${i * 40}ms">
+                    <td>${BillMaster.utils.formatDate(e.expense_date)}</td>
+                    <td>
+                      <div style="font-weight: 500;">${BillMaster.utils.escapeHtml(e.title)}</div>
+                      <div style="font-size: 0.75rem; color: var(--text-muted);">${BillMaster.utils.escapeHtml(e.description || "")}</div>
+                    </td>
+                    <td>
+                      <span class="badge" style="background: var(--bg-tertiary); gap: 6px;">
+                        <i data-lucide="${categoryIcons[e.category] || "tag"}" class="icon-xs"></i>
+                        <span>${e.category.toUpperCase()}</span>
+                      </span>
+                    </td>
+                    <td style="font-weight: 700; color: #f87171;">-${BillMaster.utils.formatCurrency(e.amount)}</td>
+                    <td>
+                      <div style="display: flex; gap: 4px;">
+                        <button class="btn btn-sm btn-ghost" onclick="deleteExpense(${e.id})" title="Delete"><i data-lucide="trash-2" class="icon-sm"></i></button>
+                      </div>
+                    </td>
+                </tr>
+            `,
+          )
+          .join("");
+        lucide.createIcons();
+      }
+
+      function calculateStats() {
+        const total = expenses.reduce(
+          (sum, e) => sum + (parseFloat(e.amount) || 0),
+          0,
+        );
+        const now = new Date();
+        const currentMonth = now.getMonth();
+        const currentYear = now.getFullYear();
+
+        const monthExpenses = expenses.filter((e) => {
+          const d = new Date(e.expense_date);
+          return (
+            d.getMonth() === currentMonth && d.getFullYear() === currentYear
+          );
+        });
+
+        const monthTotal = monthExpenses.reduce(
+          (sum, e) => sum + (parseFloat(e.amount) || 0),
+          0,
+        );
+
+        // Daily average for current month
+        const daysInMonthSoFar = now.getDate();
+        const dailyAvg =
+          daysInMonthSoFar > 0 ? monthTotal / daysInMonthSoFar : 0;
+
+        document.getElementById("totalExpenses").textContent =
+          BillMaster.utils.formatCurrency(total);
+        document.getElementById("monthExpenses").textContent =
+          BillMaster.utils.formatCurrency(monthTotal);
+        document.getElementById("dailyAvg").textContent =
+          BillMaster.utils.formatCurrency(dailyAvg);
+      }
+
+      function openModal() {
+        document.getElementById("expenseTitle").value = "";
+        document.getElementById("expenseAmount").value = "";
+        document.getElementById("expenseCategory").value = "general";
+        document.getElementById("expenseDate").valueAsDate = new Date();
+        document.getElementById("expenseDescription").value = "";
+        BillMaster.modal.open("expenseModal");
+      }
+
+      async function saveExpense() {
+        const data = {
+          title: document.getElementById("expenseTitle").value.trim(),
+          amount: document.getElementById("expenseAmount").value,
+          category: document.getElementById("expenseCategory").value,
+          expense_date: document.getElementById("expenseDate").value,
+          description: document
+            .getElementById("expenseDescription")
+            .value.trim(),
+        };
+
+        if (!data.title || !data.amount) {
+          BillMaster.toast.error("Title and amount are required");
+          return;
+        }
+
+        const result = await BillMaster.api.post(
+          "expenses.php?action=add",
+          data,
+        );
+        if (result.success) {
+          BillMaster.toast.success("Expense added!");
+          BillMaster.modal.close("expenseModal");
+          loadExpenses();
+        } else {
+          BillMaster.toast.error(result.message || "Failed to save expense");
+        }
+      }
+
+      async function deleteExpense(id) {
+        if (!confirm("Delete this expense record?")) return;
+
+        const result = await BillMaster.api.get(
+          `expenses.php?action=delete&id=${id}`,
+        );
+        if (result.success) {
+          BillMaster.toast.success("Expense deleted!");
+          loadExpenses();
+        } else {
+          BillMaster.toast.error(result.message || "Failed to delete");
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -42,6 +42,17 @@ def analytics():
         yesterday_rev = yesterday_row['revenue']
         revenue_growth = round(((today_rev - yesterday_rev) / yesterday_rev) * 100) if yesterday_rev > 0 else 0
 
+        # Expenses (Admin only)
+        today_expenses = 0
+        month_expenses = 0
+        from flask import session
+        if session.get('role') == 'admin':
+            today_exp_row = conn.execute("SELECT COALESCE(SUM(amount), 0) as total FROM expenses WHERE expense_date = date('now')").fetchone()
+            month_start_date = today.replace(day=1).strftime('%Y-%m-%d')
+            month_exp_row = conn.execute("SELECT COALESCE(SUM(amount), 0) as total FROM expenses WHERE expense_date >= ?", (month_start_date,)).fetchone()
+            today_expenses = today_exp_row['total']
+            month_expenses = month_exp_row['total']
+
         conn.close()
         return jsonify({
             'success': True,
@@ -49,13 +60,15 @@ def analytics():
                 'today': {
                     'revenue': today_rev,
                     'invoices': today_row['invoices'],
-                    'items_sold': today_items['items_sold']
+                    'items_sold': today_items['items_sold'],
+                    'expenses': today_expenses
                 },
                 'yesterday': {
                     'invoices': yesterday_row['invoices']
                 },
                 'month': {
-                    'revenue': month_row['revenue']
+                    'revenue': month_row['revenue'],
+                    'expenses': month_expenses
                 },
                 'revenue_growth': revenue_growth
             }

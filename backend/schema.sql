@@ -72,6 +72,17 @@ CREATE TABLE IF NOT EXISTS invoice_items (
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
+-- Expenses table (business costs)
+CREATE TABLE IF NOT EXISTS expenses (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    title           TEXT    NOT NULL,
+    amount          REAL    NOT NULL DEFAULT 0,
+    category        TEXT    DEFAULT 'general',
+    expense_date    DATE    DEFAULT (date('now')),
+    description     TEXT    DEFAULT '',
+    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Settings table (key-value config store)
 CREATE TABLE IF NOT EXISTS settings (
     key             TEXT    PRIMARY KEY,

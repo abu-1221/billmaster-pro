@@ -66,11 +66,30 @@ const toast = {
   },
   show(message, type = "info", duration = 3000) {
     this.init();
-    const icons = { success: "✓", error: "✕", warning: "⚠", info: "ℹ" };
+    const icons = { 
+      success: "check-circle", 
+      error: "alert-circle", 
+      warning: "alert-triangle", 
+      info: "info" 
+    };
     const toastEl = document.createElement("div");
     toastEl.className = `toast toast-${type}`;
-    toastEl.innerHTML = `<span class="toast-icon">${icons[type]}</span><span class="toast-message">${message}</span>`;
+    toastEl.innerHTML = `
+      <span class="toast-icon"><i data-lucide="${icons[type]}" class="icon-sm"></i></span>
+      <span class="toast-message">${message}</span>
+    `;
     this.container.appendChild(toastEl);
+    if (window.lucide) {
+      lucide.createIcons({
+        attrs: {
+          class: 'icon-sm'
+        },
+        nameAttr: 'data-lucide',
+        icons: [icons[type]]
+      });
+      // Fallback for dynamic content logic
+      lucide.createIcons();
+    }
     setTimeout(() => {
       toastEl.style.opacity = "0";
       toastEl.style.transform = "translateX(100%)";
@@ -218,13 +237,65 @@ function initSidebar() {
 async function initUserInfo() {
   const result = await auth.check();
   if (result.success && result.user) {
+    const user = result.user;
     const userName = document.querySelector(".user-name");
     const userRole = document.querySelector(".user-role");
     const userAvatar = document.querySelector(".user-avatar");
-    if (userName) userName.textContent = result.user.full_name || "User";
-    if (userRole) userRole.textContent = result.user.role || "staff";
-    if (userAvatar)
-      userAvatar.textContent = utils.getInitials(result.user.full_name);
+
+    if (userName) userName.textContent = user.full_name || "User";
+    if (userRole) userRole.textContent = user.role || "staff";
+    if (userAvatar) userAvatar.textContent = utils.getInitials(user.full_name);
+
+    // Role-based UI restrictions
+    const isAdmin = user.role === "admin";
+    const currentPage = window.location.pathname.split("/").pop();
+
+    // 1. Sidebar Restrictions
+    document.querySelectorAll(".nav-item").forEach((item) => {
+      const href = item.getAttribute("href");
+      if (href === "dashboard.html" || href === "settings.html" || href === "expenses.html") {
+        if (!isAdmin) {
+          item.style.display = "none";
+        }
+      }
+    });
+
+    // 2. Page Access Restrictions
+    const restrictedPages = ["dashboard.html", "settings.html", "expenses.html"];
+    if (!isAdmin && restrictedPages.includes(currentPage)) {
+      window.location.replace("billing.html"); // Redirect Staff to Billing page
+    }
+
+    // 3. User Management Restrictions (specific to settings.html if accessed by admin)
+    if (currentPage === "settings.html") {
+      const addUserBtn = document.querySelector('button[onclick="openUserModal()"]');
+      const resetSection = document.querySelector(".glass-card[style*='border: 1px solid rgba(255, 0, 0, 0.2)']");
+      if (!isAdmin) {
+        if (addUserBtn) addUserBtn.style.display = "none";
+        if (resetSection) resetSection.style.display = "none";
+      }
+    }
+
+    // 4. Global Deletion Restriction for Staff
+    if (!isAdmin) {
+      // Hide all delete buttons (usually have 'Delete' title or trash icon)
+      const hideDeletes = () => {
+        document.querySelectorAll('button').forEach(btn => {
+          const hasTrashIcon = btn.querySelector('[data-lucide="trash-2"]') || btn.innerHTML.includes('trash-2');
+          const isDeleteBtn = (btn.title && btn.title.toLowerCase().includes('delete')) || 
+                             (btn.innerText && btn.innerText.includes('Delete')) ||
+                             hasTrashIcon;
+          
+          if (isDeleteBtn) {
+            btn.style.display = 'none';
+          }
+        });
+      };
+      hideDeletes();
+      // Also run after any AJAX renders (brief delay to catch most)
+      setTimeout(hideDeletes, 500);
+      setTimeout(hideDeletes, 1500);
+    }
   }
 }
 
@@ -255,6 +326,13 @@ document.addEventListener("keydown", (e) => {
 // ==========================================
 document.addEventListener("DOMContentLoaded", () => {
   initSidebar();
+
+  // Add page entrance animation
+  const mainContent = document.querySelector(".page-content");
+  if (mainContent) {
+    mainContent.classList.add("animate-fade");
+    mainContent.style.animationDuration = "0.6s";
+  }
 
   // One-time cleanup for fresh start on new full-stack version
   if (!localStorage.getItem("billmaster_v2_migrated")) {

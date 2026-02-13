@@ -12,6 +12,7 @@ def register_routes(app):
     from backend.routes.invoices import invoices_bp
     from backend.routes.analytics import analytics_bp
     from backend.routes.settings import settings_bp
+    from backend.routes.expenses import expenses_bp
 
     app.register_blueprint(auth_bp, url_prefix='/api')
     app.register_blueprint(categories_bp, url_prefix='/api')
@@ -20,3 +21,4 @@ def register_routes(app):
     app.register_blueprint(invoices_bp, url_prefix='/api')
     app.register_blueprint(analytics_bp, url_prefix='/api')
     app.register_blueprint(settings_bp, url_prefix='/api')
+    app.register_blueprint(expenses_bp, url_prefix='/api')

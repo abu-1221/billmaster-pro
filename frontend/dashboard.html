@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/layout.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
       .stat-card .growth {
         font-size: 0.75rem;
@@ -96,7 +97,7 @@
       <!-- Sidebar -->
       <aside class="sidebar">
         <div class="sidebar-header">
-          <div class="sidebar-logo">💼</div>
+          <div class="sidebar-logo"><i data-lucide="briefcase"></i></div>
           <div class="sidebar-brand">
             <h1>BillMaster</h1>
             <span>Pro Billing</span>
@@ -105,40 +106,60 @@
         <nav class="sidebar-nav">
           <div class="nav-section">
             <div class="nav-section-title">Menu</div>
-            <a href="dashboard.html" class="nav-item active"
-              ><span class="nav-item-icon">📊</span
-              ><span class="nav-item-text">Dashboard</span></a
-            >
-            <a href="billing.html" class="nav-item"
-              ><span class="nav-item-icon">🧾</span
-              ><span class="nav-item-text">New Bill</span></a
-            >
-            <a href="invoices.html" class="nav-item"
-              ><span class="nav-item-icon">📋</span
-              ><span class="nav-item-text">Invoices</span></a
-            >
+            <a href="dashboard.html" class="nav-item active">
+              <span class="nav-item-icon"
+                ><i data-lucide="layout-dashboard" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Dashboard</span>
+            </a>
+            <a href="billing.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="receipt" class="icon"></i
+              ></span>
+              <span class="nav-item-text">New Bill</span>
+            </a>
+            <a href="invoices.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="file-text" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Invoices</span>
+            </a>
+            <a href="expenses.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="credit-card" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Expenses</span>
+            </a>
           </div>
           <div class="nav-section">
             <div class="nav-section-title">Manage</div>
-            <a href="products.html" class="nav-item"
-              ><span class="nav-item-icon">📦</span
-              ><span class="nav-item-text">Products</span></a
-            >
-            <a href="customers.html" class="nav-item"
-              ><span class="nav-item-icon">👥</span
-              ><span class="nav-item-text">Customers</span></a
-            >
-            <a href="categories.html" class="nav-item"
-              ><span class="nav-item-icon">🏷️</span
-              ><span class="nav-item-text">Categories</span></a
-            >
+            <a href="products.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="package" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Products</span>
+            </a>
+            <a href="customers.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="users" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Customers</span>
+            </a>
+            <a href="categories.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="tag" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Categories</span>
+            </a>
           </div>
           <div class="nav-section">
             <div class="nav-section-title">System</div>
-            <a href="settings.html" class="nav-item"
-              ><span class="nav-item-icon">⚙️</span
-              ><span class="nav-item-text">Settings</span></a
-            >
+            <a href="settings.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="settings" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Settings</span>
+            </a>
           </div>
         </nav>
         <div class="sidebar-footer">
@@ -156,23 +177,32 @@
       <main class="main-content">
         <header class="main-header">
           <div class="header-left">
-            <button class="sidebar-toggle">☰</button>
-            <h2 class="page-title">📊 Analytics Dashboard</h2>
+            <button class="sidebar-toggle"><i data-lucide="menu"></i></button>
+            <h2 class="page-title">
+              <i data-lucide="bar-chart-3" class="icon-lg"></i> Analytics
+              Dashboard
+            </h2>
           </div>
           <div class="header-right">
-            <span class="live-indicator">Live Tracking</span>
-            <a href="billing.html" class="btn btn-primary"
-              ><span>➕</span><span>New Bill</span></a
+            <span class="live-indicator"
+              ><i data-lucide="activity" class="icon-sm"></i> Live
+              Tracking</span
             >
+            <a href="billing.html" class="btn btn-primary">
+              <i data-lucide="plus" class="icon"></i>
+              <span>New Bill</span>
+            </a>
           </div>
         </header>
 
         <div class="page-content">
           <!-- Stats Grid -->
-          <div class="card-grid" style="margin-bottom: var(--space-xl)">
+          <div class="card-grid grid-5" style="margin-bottom: var(--space-xl)">
             <div class="stat-card">
               <div class="stat-card-header">
-                <div class="stat-card-icon primary">💰</div>
+                <div class="stat-card-icon primary">
+                  <i data-lucide="indian-rupee" class="icon"></i>
+                </div>
               </div>
               <div class="stat-card-value" id="todayRevenue">₹0</div>
               <div class="stat-card-label">Today's Revenue</div>
@@ -181,7 +211,9 @@
 
             <div class="stat-card">
               <div class="stat-card-header">
-                <div class="stat-card-icon success">📄</div>
+                <div class="stat-card-icon success">
+                  <i data-lucide="file-text" class="icon"></i>
+                </div>
               </div>
               <div class="stat-card-value" id="todayInvoices">0</div>
               <div class="stat-card-label">Today's Invoices</div>
@@ -190,7 +222,9 @@
 
             <div class="stat-card">
               <div class="stat-card-header">
-                <div class="stat-card-icon warning">🛒</div>
+                <div class="stat-card-icon warning">
+                  <i data-lucide="shopping-cart" class="icon"></i>
+                </div>
               </div>
               <div class="stat-card-value" id="itemsSold">0</div>
               <div class="stat-card-label">Items Sold Today</div>
@@ -198,10 +232,22 @@
 
             <div class="stat-card">
               <div class="stat-card-header">
-                <div class="stat-card-icon danger">📈</div>
+                <div class="stat-card-icon info">
+                  <i data-lucide="line-chart" class="icon"></i>
+                </div>
               </div>
               <div class="stat-card-value" id="monthRevenue">₹0</div>
               <div class="stat-card-label">This Month</div>
+            </div>
+
+            <div class="stat-card admin-only" style="display: none">
+              <div class="stat-card-header">
+                <div class="stat-card-icon danger">
+                  <i data-lucide="wallet" class="icon"></i>
+                </div>
+              </div>
+              <div class="stat-card-value" id="todayExpenses">₹0</div>
+              <div class="stat-card-label">Today Expenses</div>
             </div>
           </div>
 
@@ -214,6 +260,8 @@
               margin-bottom: var(--space-xl);
             "
           >
+            // ... existing code ...
+
             <div class="glass-card" style="padding: var(--space-lg)">
               <div
                 style="
@@ -223,8 +271,16 @@
                   margin-bottom: var(--space-lg);
                 "
               >
-                <h3 style="font-size: 1rem; color: var(--text-primary)">
-                  📈 Sales Trend
+                <h3
+                  style="
+                    font-size: 1rem;
+                    color: var(--text-primary);
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                  "
+                >
+                  <i data-lucide="trending-up" class="icon"></i> Sales Trend
                 </h3>
                 <div class="period-tabs">
                   <button class="period-tab" data-days="7">7 Days</button>
@@ -245,9 +301,12 @@
                   font-size: 1rem;
                   margin-bottom: var(--space-lg);
                   color: var(--text-primary);
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
                 "
               >
-                💳 Payment Methods
+                <i data-lucide="credit-card" class="icon"></i> Payment Methods
               </h3>
               <div class="chart-container">
                 <canvas id="paymentChart"></canvas>
@@ -271,9 +330,12 @@
                   font-size: 1rem;
                   margin-bottom: var(--space-lg);
                   color: var(--text-primary);
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
                 "
               >
-                🏆 Top Selling Products
+                <i data-lucide="trophy" class="icon"></i> Top Selling Products
               </h3>
               <div id="topProducts"></div>
             </div>
@@ -284,9 +346,13 @@
                   font-size: 1rem;
                   margin-bottom: var(--space-lg);
                   color: var(--text-primary);
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
                 "
               >
-                ⚠️ Low Stock Alert
+                <i data-lucide="alert-triangle" class="icon"></i> Low Stock
+                Alert
               </h3>
               <div id="lowStock"></div>
             </div>
@@ -297,9 +363,12 @@
                   font-size: 1rem;
                   margin-bottom: var(--space-lg);
                   color: var(--text-primary);
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
                 "
               >
-                🕐 Recent Sales
+                <i data-lucide="clock" class="icon"></i> Recent Sales
               </h3>
               <div id="recentInvoices"></div>
             </div>
@@ -312,9 +381,12 @@
                 font-size: 1rem;
                 margin-bottom: var(--space-lg);
                 color: var(--text-primary);
+                display: flex;
+                align-items: center;
+                gap: 8px;
               "
             >
-              ⏰ Today's Hourly Sales
+              <i data-lucide="clock" class="icon"></i> Today's Hourly Sales
             </h3>
             <div class="chart-container">
               <canvas id="hourlyChart"></canvas>
@@ -346,9 +418,10 @@
       document.addEventListener("DOMContentLoaded", async () => {
         try {
           const user = await BillMaster.auth.requireAuth();
-          if (!user) return; // Will be redirected to login
+          if (!user) return;
 
           await initUserInfo();
+          lucide.createIcons();
           await loadDashboard();
 
           // Remove loader
@@ -374,8 +447,8 @@
           });
         });
 
-        // Auto-refresh every 30 seconds for live tracking
-        refreshInterval = setInterval(loadDashboard, 30000);
+        // Auto-refresh for live tracking
+        refreshInterval = setInterval(loadDashboard, 60000);
       });
 
       async function loadDashboard() {
@@ -388,6 +461,7 @@
           loadRecentInvoices(),
           loadHourlySales(),
         ]);
+        if (typeof lucide !== "undefined") lucide.createIcons();
       }
 
       async function loadStats() {
@@ -404,15 +478,24 @@
           document.getElementById("monthRevenue").textContent =
             BillMaster.utils.formatCurrency(d.month.revenue);
 
+          // Admin stats
+          const userResult = await BillMaster.auth.check();
+          if (userResult.success && userResult.user.role === "admin") {
+            document
+              .querySelectorAll(".admin-only")
+              .forEach((el) => (el.style.display = "block"));
+            document.getElementById("todayExpenses").textContent =
+              BillMaster.utils.formatCurrency(d.today.expenses || 0);
+          }
+
           // Growth indicator
           const growthEl = document.getElementById("revenueGrowth");
           if (d.revenue_growth !== 0) {
-            const isPositive = d.revenue_growth > 0;
-            growthEl.className =
-              "growth " + (isPositive ? "positive" : "negative");
-            growthEl.textContent = `${isPositive ? "↑" : "↓"} ${Math.abs(d.revenue_growth)}% vs yesterday`;
+            growthEl.innerHTML = `<span>${d.revenue_growth > 0 ? '<i data-lucide="arrow-up" class="icon-xs"></i>' : '<i data-lucide="arrow-down" class="icon-xs"></i>'} ${Math.abs(d.revenue_growth)}%</span> vs yesterday`;
+            growthEl.classList.add(d.revenue_growth > 0 ? "up" : "down");
           } else {
             growthEl.textContent = "";
+            growthEl.classList.remove("up", "down");
           }
 
           // Invoice growth
@@ -430,7 +513,7 @@
         }
       }
 
-      async function loadSalesChart(days) {
+      async function loadSalesChart(days = 14) {
         const sales = await BillMaster.api.get(
           `analytics.php?action=sales_chart&days=${days}`,
         );
@@ -438,6 +521,10 @@
 
         const ctx = document.getElementById("salesChart").getContext("2d");
         if (salesChart) salesChart.destroy();
+
+        const purpleGrd = ctx.createLinearGradient(0, 0, 0, 400);
+        purpleGrd.addColorStop(0, "rgba(79, 70, 229, 0.4)");
+        purpleGrd.addColorStop(1, "rgba(79, 70, 229, 0)");
 
         salesChart = new Chart(ctx, {
           type: "line",
@@ -452,23 +539,22 @@
               {
                 label: "Revenue",
                 data: sales.data.map((d) => d.total),
-                borderColor: "#4f46e5",
-                backgroundColor: "rgba(79, 70, 229, 0.1)",
+                borderColor: "#6366f1",
+                backgroundColor: purpleGrd,
                 fill: true,
                 tension: 0.4,
-                pointBackgroundColor: "#4f46e5",
-                pointBorderColor: "#fff",
-                pointBorderWidth: 2,
+                borderWidth: 3,
                 pointRadius: 4,
+                pointHoverRadius: 6,
               },
               {
                 label: "Paid",
                 data: sales.data.map((d) => d.paid),
                 borderColor: "#10b981",
-                backgroundColor: "rgba(16, 185, 129, 0.1)",
-                fill: true,
+                fill: false,
                 tension: 0.4,
-                pointRadius: 3,
+                borderWidth: 2,
+                pointRadius: 0,
               },
             ],
           },
@@ -479,17 +565,31 @@
               legend: {
                 display: true,
                 position: "top",
-                labels: { color: "#64748b", usePointStyle: true },
+                align: "start",
+                labels: {
+                  color: "#94a3b8",
+                  usePointStyle: true,
+                  font: { size: 11 },
+                },
+              },
+              tooltip: {
+                backgroundColor: "rgba(15, 23, 42, 0.9)",
+                borderColor: "rgba(255, 255, 255, 0.1)",
+                borderWidth: 1,
+                callbacks: {
+                  label: (ctx) =>
+                    ` ${ctx.dataset.label}: ₹${ctx.parsed.y.toLocaleString()}`,
+                },
               },
             },
             scales: {
-              x: {
-                grid: { color: "rgba(148, 163, 184, 0.1)" },
-                ticks: { color: "#64748b" },
-              },
+              x: { grid: { display: false }, ticks: { color: "#64748b" } },
               y: {
-                grid: { color: "rgba(148, 163, 184, 0.1)" },
-                ticks: { color: "#64748b", callback: (v) => "₹" + v },
+                grid: { color: "rgba(148, 163, 184, 0.05)", drawBorder: false },
+                ticks: {
+                  color: "#64748b",
+                  callback: (v) => "₹" + v.toLocaleString(),
+                },
               },
             },
             interaction: { intersect: false, mode: "index" },
@@ -498,65 +598,64 @@
       }
 
       async function loadPaymentMethods() {
-        const payments = await BillMaster.api.get(
+        const result = await BillMaster.api.get(
           "analytics.php?action=payment_methods",
         );
-        if (!payments.success) return;
+        if (!result.success) return;
 
         const ctx = document.getElementById("paymentChart").getContext("2d");
         if (paymentChart) paymentChart.destroy();
 
         const colors = {
           cash: "#10b981",
-          card: "#3b82f6",
-          upi: "#8b5cf6",
-          bank_transfer: "#f59e0b",
-          credit: "#ef4444 ",
-        };
-        const labels = {
-          cash: "💵 Cash",
-          card: "💳 Card",
-          upi: "📱 UPI",
-          bank_transfer: "🏦 Bank",
-          credit: "📝 Credit",
+          card: "#4f46e5",
+          upi: "#06b6d4",
+          credit: "#f59e0b",
         };
 
         paymentChart = new Chart(ctx, {
           type: "doughnut",
           data: {
-            labels: payments.data.map(
-              (d) => labels[d.payment_method] || d.payment_method,
-            ),
+            labels: result.data.map((p) => p.payment_method.toUpperCase()),
             datasets: [
               {
-                data: payments.data.map((d) => d.total),
-                backgroundColor: payments.data.map(
-                  (d) => colors[d.payment_method] || "#4f46e5",
+                data: result.data.map((p) => p.total),
+                backgroundColor: result.data.map(
+                  (p) => colors[p.payment_method] || "#334155",
                 ),
                 borderWidth: 0,
+                hoverOffset: 12,
               },
             ],
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            cutout: "65%",
+            cutout: "75%",
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: "rgba(15, 23, 42, 0.9)",
+                callbacks: {
+                  label: (ctx) =>
+                    ` ₹${ctx.parsed.y.toLocaleString()} (${result.data[ctx.dataIndex].percentage}%)`,
+                },
+              },
+            },
           },
         });
 
-        // Custom legend with percentages
-        document.getElementById("paymentLegend").innerHTML = payments.data
+        document.getElementById("paymentLegend").innerHTML = result.data
           .map(
             (d) => `
-                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.8125rem; margin-bottom: var(--space-xs);">
-                    <div style="display: flex; align-items: center; gap: var(--space-sm);">
-                        <span style="width: 12px; height: 12px; border-radius: 50%; background: ${colors[d.payment_method] || "#4f46e5"};"></span>
-                        <span>${d.payment_method.toUpperCase()}</span>
-                    </div>
-                    <span style="font-weight: 600;">${d.percentage || 0}%</span>
+            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.8125rem; margin-bottom: 6px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="width: 10px; height: 10px; border-radius: 50%; background: ${colors[d.payment_method] || "#334155"};"></span>
+                    <span>${d.payment_method.toUpperCase()}</span>
                 </div>
-            `,
+                <span style="font-weight: 600;">${d.percentage || 0}%</span>
+            </div>
+        `,
           )
           .join("");
       }
@@ -570,20 +669,15 @@
         const ctx = document.getElementById("hourlyChart").getContext("2d");
         if (hourlyChart) hourlyChart.destroy();
 
-        // Only show hours with data or business hours (8am-10pm)
-        const filteredData = hourly.data.filter(
-          (h) => h.hour >= 8 && h.hour <= 22,
-        );
-
         hourlyChart = new Chart(ctx, {
           type: "bar",
           data: {
-            labels: filteredData.map((d) => `${d.hour}:00`),
+            labels: hourly.data.map((h) => `${h.hour}h`),
             datasets: [
               {
                 label: "Revenue",
-                data: filteredData.map((d) => d.revenue),
-                backgroundColor: "rgba(79, 70, 229, 0.7)",
+                data: hourly.data.map((h) => h.revenue),
+                backgroundColor: "rgba(59, 130, 246, 0.6)",
                 borderRadius: 4,
               },
             ],
@@ -595,8 +689,8 @@
             scales: {
               x: { grid: { display: false }, ticks: { color: "#64748b" } },
               y: {
-                grid: { color: "rgba(148, 163, 184, 0.1)" },
-                ticks: { color: "#64748b", callback: (v) => "₹" + v },
+                grid: { color: "rgba(148, 163, 184, 0.05)", drawBorder: false },
+                ticks: { color: "#64748b" },
               },
             },
           },
@@ -608,25 +702,23 @@
           "analytics.php?action=top_products&limit=5",
         );
         const el = document.getElementById("topProducts");
-
         if (!top.success || !top.data.length) {
           el.innerHTML =
-            '<p style="color: var(--text-muted); text-align: center; padding: var(--space-lg);">No sales data yet</p>';
+            '<p class="text-muted text-center p-4">No sales data yet</p>';
           return;
         }
-
         el.innerHTML = top.data
           .map(
             (p, i) => `
-                <div class="recent-item">
-                    <div style="width: 28px; height: 28px; background: ${i < 3 ? "var(--primary)" : "var(--bg-tertiary)"}; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; color: ${i < 3 ? "white" : "var(--text-muted)"};">${i + 1}</div>
-                    <div style="flex: 1;">
-                        <div style="font-size: 0.875rem; font-weight: 500;">${BillMaster.utils.escapeHtml(p.name)}</div>
-                        <div style="font-size: 0.75rem; color: var(--text-muted);">${p.sold} sold @ ${BillMaster.utils.formatCurrency(p.avg_price)}</div>
-                    </div>
-                    <div style="font-weight: 600; color: var(--success); font-size: 0.875rem;">${BillMaster.utils.formatCurrency(p.revenue)}</div>
+            <div class="recent-item">
+                <div style="width: 28px; height: 28px; background: ${i < 3 ? "var(--primary)" : "var(--bg-tertiary)"}; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; color: white;">${i + 1}</div>
+                <div style="flex: 1;">
+                    <div style="font-size: 0.875rem; font-weight: 500;">${BillMaster.utils.escapeHtml(p.name)}</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">${p.sold} sold</div>
                 </div>
-            `,
+                <div style="font-weight: 600; color: var(--success); font-size: 0.875rem;">${BillMaster.utils.formatCurrency(p.revenue)}</div>
+            </div>
+        `,
           )
           .join("");
       }
@@ -634,22 +726,20 @@
       async function loadLowStock() {
         const low = await BillMaster.api.get("analytics.php?action=low_stock");
         const el = document.getElementById("lowStock");
-
         if (!low.success || !low.data.length) {
           el.innerHTML =
-            '<p style="color: var(--success); text-align: center; padding: var(--space-lg);">✓ All stock levels OK</p>';
+            '<p class="text-success text-center p-4"><i data-lucide="check-circle" class="icon text-success"></i> All stock levels OK</p>';
           return;
         }
-
         el.innerHTML = low.data
           .map(
             (p) => `
-                <div class="recent-item">
-                    <span style="font-size: 1rem;">${p.stock_quantity <= 0 ? "❌" : "⚠️"}</span>
-                    <div style="flex: 1; font-size: 0.875rem; font-weight: 500;">${BillMaster.utils.escapeHtml(p.name)}</div>
-                    <span class="badge ${p.stock_quantity <= 0 ? "badge-danger" : "badge-warning"}">${p.stock_quantity} ${p.unit}</span>
-                </div>
-            `,
+            <div class="recent-item">
+                <span style="font-size: 1rem;">${p.stock_quantity <= 0 ? '<i data-lucide="x-circle" class="icon text-danger"></i>' : '<i data-lucide="alert-triangle" class="icon text-warning"></i>'}</span>
+                <div style="flex: 1; font-size: 0.875rem; font-weight: 500;">${BillMaster.utils.escapeHtml(p.name)}</div>
+                <span class="badge ${p.stock_quantity <= 0 ? "badge-danger" : "badge-warning"}">${p.stock_quantity} ${p.unit}</span>
+            </div>
+        `,
           )
           .join("");
       }
@@ -659,27 +749,25 @@
           "analytics.php?action=recent_invoices&limit=5",
         );
         const el = document.getElementById("recentInvoices");
-
         if (!recent.success || !recent.data.length) {
           el.innerHTML =
-            '<p style="color: var(--text-muted); text-align: center; padding: var(--space-lg);">No invoices yet</p>';
+            '<p class="text-muted text-center p-4">No invoices yet</p>';
           return;
         }
-
         el.innerHTML = recent.data
           .map(
             (inv) => `
-                <div class="recent-item">
-                    <div style="flex: 1;">
-                        <div style="font-size: 0.875rem; font-weight: 500;">${inv.customer_name || "Walk-in"}</div>
-                        <div style="font-size: 0.75rem; color: var(--text-muted);">${inv.invoice_number}</div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="font-weight: 600; color: var(--success); font-size: 0.875rem;">${BillMaster.utils.formatCurrency(inv.total_amount)}</div>
-                        <span class="badge ${inv.payment_status === "paid" ? "badge-success" : "badge-warning"}" style="font-size: 0.625rem;">${inv.payment_status}</span>
-                    </div>
+            <div class="recent-item">
+                <div style="flex: 1;">
+                    <div style="font-size: 0.875rem; font-weight: 500;">${inv.customer_name || "Walk-in"}</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">${inv.invoice_number}</div>
                 </div>
-            `,
+                <div style="text-align: right;">
+                    <div style="font-weight: 600; color: var(--success); font-size: 0.875rem;">${BillMaster.utils.formatCurrency(inv.total_amount)}</div>
+                    <span class="badge ${inv.payment_status === "paid" ? "badge-success" : "badge-warning"}" style="font-size: 0.625rem;">${inv.payment_status}</span>
+                </div>
+            </div>
+        `,
           )
           .join("");
       }

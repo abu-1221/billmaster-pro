@@ -53,6 +53,10 @@ def auth():
         return jsonify({'success': True})
 
     elif action == 'register':
+        # ONLY ADMINS CAN REGISTER NEW USERS
+        if session.get('role') != 'admin':
+            return jsonify({'success': False, 'message': 'Access denied: Requires Admin role'})
+
         data = request.get_json()
         username = data.get('username', '')
         password = data.get('password', '')
@@ -74,6 +78,27 @@ def auth():
         )
         conn.commit()
         conn.close()
-        return jsonify({'success': True})
+        return jsonify({'success': True, 'message': f'User {username} created successfully as {role}'})
+
+    elif action == 'update_password':
+        # ONLY ADMINS CAN UPDATE OTHER USERS' PASSWORDS
+        if session.get('role') != 'admin':
+            return jsonify({'success': False, 'message': 'Access denied: Requires Admin role'})
+
+        data = request.get_json()
+        user_id = data.get('id')
+        new_password = data.get('password')
+
+        if not user_id or not new_password:
+            return jsonify({'success': False, 'message': 'Missing user ID or password'})
+
+        conn = get_db()
+        conn.execute(
+            "UPDATE users SET password = ? WHERE id = ?",
+            (new_password, user_id)
+        )
+        conn.commit()
+        conn.close()
+        return jsonify({'success': True, 'message': 'Password updated successfully'})
 
     return jsonify({'success': False, 'message': 'Unknown action'})

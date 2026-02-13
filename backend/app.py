@@ -2,7 +2,7 @@
 BillMaster Pro - Flask Application Factory
 """
 
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, redirect
 from flask_cors import CORS
 import os
 from backend.database import init_db
@@ -33,7 +33,7 @@ def create_app(app_config):
     # Serve static frontend files
     @app.route('/')
     def index():
-        return send_from_directory(app.config['FRONTEND_DIR'], 'index.html')
+        return redirect('/login.html')
 
     @app.route('/<path:path>')
     def serve_frontend(path):

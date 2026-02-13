@@ -56,7 +56,7 @@ def fix_all_images():
         
         # Rice & Biryani
         ('Creamy Curd Rice', 80, 'Cooling yogurt rice with tempering', 
-         'https://images.unsplash.com/photo-1588675646184-f5b0b0b0b2de?auto=format&fit=crop&q=80&w=800'),
+         'https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&q=80&w=800'),
         ('Vegetable Biryani', 230, 'Aromatic basmati rice with whole spices', 
          'https://images.unsplash.com/photo-1563379091339-03b21bc4a6f8?auto=format&fit=crop&q=80&w=800'),
         ('Bisibelebath', 115, 'Sambar rice cooked with many vegetables', 

@@ -13,6 +13,7 @@
     />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/layout.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
       @media print {
         body * {
@@ -74,7 +75,7 @@
 
       <aside class="sidebar">
         <div class="sidebar-header">
-          <div class="sidebar-logo">💼</div>
+          <div class="sidebar-logo"><i data-lucide="briefcase"></i></div>
           <div class="sidebar-brand">
             <h1>BillMaster</h1>
             <span>Pro Billing</span>
@@ -83,33 +84,60 @@
         <nav class="sidebar-nav">
           <div class="nav-section">
             <div class="nav-section-title">Menu</div>
-            <a href="dashboard.html" class="nav-item"
-              ><span class="nav-item-icon">📊</span><span>Dashboard</span></a
-            >
-            <a href="billing.html" class="nav-item"
-              ><span class="nav-item-icon">🧾</span><span>New Bill</span></a
-            >
-            <a href="invoices.html" class="nav-item active"
-              ><span class="nav-item-icon">📋</span><span>Invoices</span></a
-            >
+            <a href="dashboard.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="layout-dashboard" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Dashboard</span>
+            </a>
+            <a href="billing.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="receipt" class="icon"></i
+              ></span>
+              <span class="nav-item-text">New Bill</span>
+            </a>
+            <a href="invoices.html" class="nav-item active">
+              <span class="nav-item-icon"
+                ><i data-lucide="file-text" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Invoices</span>
+            </a>
+            <a href="expenses.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="credit-card" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Expenses</span>
+            </a>
           </div>
           <div class="nav-section">
             <div class="nav-section-title">Manage</div>
-            <a href="products.html" class="nav-item"
-              ><span class="nav-item-icon">📦</span><span>Products</span></a
-            >
-            <a href="customers.html" class="nav-item"
-              ><span class="nav-item-icon">👥</span><span>Customers</span></a
-            >
-            <a href="categories.html" class="nav-item"
-              ><span class="nav-item-icon">🏷️</span><span>Categories</span></a
-            >
+            <a href="products.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="package" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Products</span>
+            </a>
+            <a href="customers.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="users" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Customers</span>
+            </a>
+            <a href="categories.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="tag" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Categories</span>
+            </a>
           </div>
           <div class="nav-section">
             <div class="nav-section-title">System</div>
-            <a href="settings.html" class="nav-item"
-              ><span class="nav-item-icon">⚙️</span><span>Settings</span></a
-            >
+            <a href="settings.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="settings" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Settings</span>
+            </a>
           </div>
         </nav>
         <div class="sidebar-footer">
@@ -126,12 +154,15 @@
       <main class="main-content">
         <header class="main-header">
           <div class="header-left">
-            <button class="sidebar-toggle">☰</button>
-            <h2 class="page-title">📋 Invoices</h2>
+            <button class="sidebar-toggle"><i data-lucide="menu"></i></button>
+            <h2 class="page-title">
+              <i data-lucide="file-text" class="icon-lg"></i> Invoices
+            </h2>
           </div>
           <div class="header-right">
             <a href="billing.html" class="btn btn-primary">
-              <span>➕</span><span>New Invoice</span>
+              <i data-lucide="plus" class="icon"></i>
+              <span>New Invoice</span>
             </a>
           </div>
         </header>
@@ -204,7 +235,7 @@
             class="modal-close"
             onclick="BillMaster.modal.close('viewModal')"
           >
-            ×
+            <i data-lucide="x"></i>
           </button>
         </div>
         <div class="modal-body" id="invoiceDetails"></div>
@@ -216,7 +247,8 @@
             Close
           </button>
           <button class="btn btn-primary" onclick="printInvoice()">
-            🖨️ Print
+            <i data-lucide="printer" class="icon"></i>
+            <span>Print Invoice</span>
           </button>
         </div>
       </div>
@@ -233,6 +265,7 @@
       document.addEventListener("DOMContentLoaded", async () => {
         await BillMaster.auth.requireAuth();
         await initUserInfo();
+        lucide.createIcons();
         await loadInvoices();
         initFilters();
 
@@ -307,15 +340,16 @@
                     <td>${BillMaster.utils.formatDateTime(inv.created_at)}</td>
                     <td style="font-weight: 600; color: var(--success);">${BillMaster.utils.formatCurrency(inv.total_amount)}</td>
                     <td><span class="badge badge-info">${(inv.payment_method || "cash").toUpperCase()}</span></td>
-                    <td><span class="badge ${inv.payment_status === "paid" ? "badge-success" : "badge-warning"}">${inv.payment_status === "paid" ? "✅ Paid" : "⏳ Pending"}</span></td>
+                    <td><span class="badge ${inv.payment_status === "paid" ? "badge-success" : "badge-warning"}">${inv.payment_status === "paid" ? "Paid" : "Pending"}</span></td>
                     <td>
-                        <button class="btn btn-sm btn-ghost" onclick="viewInvoice(${inv.id})" title="View">👁️</button>
-                        <button class="btn btn-sm btn-ghost" onclick="viewInvoice(${inv.id}, true)" title="Print">🖨️</button>
+                        <button class="btn btn-sm btn-ghost" onclick="viewInvoice(${inv.id})" title="View"><i data-lucide="eye" class="icon-sm"></i></button>
+                        <button class="btn btn-sm btn-ghost" onclick="viewInvoice(${inv.id}, true)" title="Print"><i data-lucide="printer" class="icon-sm"></i></button>
                     </td>
                 </tr>
             `,
           )
           .join("");
+        lucide.createIcons();
       }
 
       async function viewInvoice(id, autoPrint = false) {

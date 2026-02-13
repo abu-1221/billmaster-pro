@@ -13,6 +13,7 @@
     />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/layout.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
   </head>
   <body>
     <div class="app-layout">
@@ -20,7 +21,7 @@
 
       <aside class="sidebar">
         <div class="sidebar-header">
-          <div class="sidebar-logo">💼</div>
+          <div class="sidebar-logo"><i data-lucide="briefcase"></i></div>
           <div class="sidebar-brand">
             <h1>BillMaster</h1>
             <span>Pro Billing</span>
@@ -29,33 +30,60 @@
         <nav class="sidebar-nav">
           <div class="nav-section">
             <div class="nav-section-title">Menu</div>
-            <a href="dashboard.html" class="nav-item"
-              ><span class="nav-item-icon">📊</span><span>Dashboard</span></a
-            >
-            <a href="billing.html" class="nav-item"
-              ><span class="nav-item-icon">🧾</span><span>New Bill</span></a
-            >
-            <a href="invoices.html" class="nav-item"
-              ><span class="nav-item-icon">📋</span><span>Invoices</span></a
-            >
+            <a href="dashboard.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="layout-dashboard" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Dashboard</span>
+            </a>
+            <a href="billing.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="receipt" class="icon"></i
+              ></span>
+              <span class="nav-item-text">New Bill</span>
+            </a>
+            <a href="invoices.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="file-text" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Invoices</span>
+            </a>
+            <a href="expenses.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="credit-card" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Expenses</span>
+            </a>
           </div>
           <div class="nav-section">
             <div class="nav-section-title">Manage</div>
-            <a href="products.html" class="nav-item"
-              ><span class="nav-item-icon">📦</span><span>Products</span></a
-            >
-            <a href="customers.html" class="nav-item"
-              ><span class="nav-item-icon">👥</span><span>Customers</span></a
-            >
-            <a href="categories.html" class="nav-item"
-              ><span class="nav-item-icon">🏷️</span><span>Categories</span></a
-            >
+            <a href="products.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="package" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Products</span>
+            </a>
+            <a href="customers.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="users" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Customers</span>
+            </a>
+            <a href="categories.html" class="nav-item">
+              <span class="nav-item-icon"
+                ><i data-lucide="tag" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Categories</span>
+            </a>
           </div>
           <div class="nav-section">
             <div class="nav-section-title">System</div>
-            <a href="settings.html" class="nav-item active"
-              ><span class="nav-item-icon">⚙️</span><span>Settings</span></a
-            >
+            <a href="settings.html" class="nav-item active">
+              <span class="nav-item-icon"
+                ><i data-lucide="settings" class="icon"></i
+              ></span>
+              <span class="nav-item-text">Settings</span>
+            </a>
           </div>
         </nav>
         <div class="sidebar-footer">
@@ -72,8 +100,10 @@
       <main class="main-content">
         <header class="main-header">
           <div class="header-left">
-            <button class="sidebar-toggle">☰</button>
-            <h2 class="page-title">⚙️ Settings</h2>
+            <button class="sidebar-toggle"><i data-lucide="menu"></i></button>
+            <h2 class="page-title">
+              <i data-lucide="settings" class="icon-lg"></i> Settings
+            </h2>
           </div>
         </header>
 
@@ -95,7 +125,8 @@
                   gap: var(--space-sm);
                 "
               >
-                <span>🏢</span> Business Information
+                <i data-lucide="building-2" class="icon"></i> Business
+                Information
               </h3>
               <form id="businessForm">
                 <div class="form-group">
@@ -134,7 +165,7 @@
                   />
                 </div>
                 <button type="submit" class="btn btn-primary">
-                  <span>💾</span> Save Business Info
+                  <i data-lucide="save" class="icon"></i> Save Business Info
                 </button>
               </form>
             </div>
@@ -149,7 +180,7 @@
                   gap: var(--space-sm);
                 "
               >
-                <span>🧾</span> Billing Settings
+                <i data-lucide="receipt" class="icon"></i> Billing Settings
               </h3>
               <form id="billingForm">
                 <div class="form-group">
@@ -183,7 +214,7 @@
                   />
                 </div>
                 <button type="submit" class="btn btn-primary">
-                  <span>💾</span> Save Billing Settings
+                  <i data-lucide="save" class="icon"></i> Save Billing Settings
                 </button>
               </form>
             </div>
@@ -206,10 +237,10 @@
               <h3
                 style="display: flex; align-items: center; gap: var(--space-sm)"
               >
-                <span>👥</span> User Management
+                <i data-lucide="users" class="icon"></i> User Management
               </h3>
               <button class="btn btn-primary btn-sm" onclick="openUserModal()">
-                <span>➕</span> Add User
+                <i data-lucide="user-plus" class="icon"></i> Add User
               </button>
             </div>
             <div class="table-container">
@@ -246,7 +277,8 @@
                 color: #ff4444;
               "
             >
-              <span>🛠️</span> Master Clean & Reset
+              <i data-lucide="alert-triangle" class="icon"></i> Master Clean &
+              Reset
             </h3>
 
             <div
@@ -282,7 +314,8 @@
                   class="btn btn-secondary btn-sm"
                   style="border-color: #ff4444; color: #ff4444; width: 100%"
                 >
-                  🧹 Clear Browser Cache
+                  <i data-lucide="refresh-cw" class="icon"></i> Clear Browser
+                  Cache
                 </button>
               </div>
 
@@ -317,7 +350,7 @@
                     width: 100%;
                   "
                 >
-                  🧨 Reset Everything (SQL)
+                  <i data-lucide="bomb" class="icon"></i> Reset Everything (SQL)
                 </button>
               </div>
             </div>
@@ -335,7 +368,7 @@
             class="modal-close"
             onclick="BillMaster.modal.close('userModal')"
           >
-            ×
+            <i data-lucide="x"></i>
           </button>
         </div>
         <div class="modal-body">
@@ -393,6 +426,7 @@
       document.addEventListener("DOMContentLoaded", async () => {
         await BillMaster.auth.requireAuth();
         await initUserInfo();
+        lucide.createIcons();
         await loadSettings();
         await loadUsers();
       });
@@ -486,11 +520,36 @@
                     <td><code style="background: var(--bg-tertiary); padding: 0.125rem 0.5rem; border-radius: var(--radius-sm);">${user.username}</code></td>
                     <td><span class="badge ${user.role === "admin" ? "badge-primary" : "badge-info"}">${user.role}</span></td>
                     <td style="font-size: 0.875rem; color: var(--text-muted);">${BillMaster.utils.formatDate(user.created_at)}</td>
-                    <td>${user.id > 1 ? `<button class="btn btn-sm btn-ghost" onclick="deleteUser(${user.id})">🗑️</button>` : "—"}</td>
+                    <td>
+                      <div style="display: flex; gap: 4px;">
+                        <button class="btn btn-sm btn-ghost" onclick="promptPassword(${user.id})" title="Change Password"><i data-lucide="key" class="icon-sm"></i></button>
+                        ${user.id > 1 ? `<button class="btn btn-sm btn-ghost" onclick="deleteUser(${user.id})" title="Delete User"><i data-lucide="trash-2" class="icon-sm"></i></button>` : ""}
+                      </div>
+                    </td>
                 </tr>
             `,
           )
           .join("");
+        lucide.createIcons();
+      }
+
+      async function promptPassword(id) {
+        const newPass = prompt("Enter new password for this user:");
+        if (!newPass) return;
+        if (newPass.length < 6) {
+          BillMaster.toast.error("Password too short");
+          return;
+        }
+
+        const result = await BillMaster.api.post(
+          "auth.php?action=update_password",
+          {
+            id: id,
+            password: newPass,
+          },
+        );
+        if (result.success) BillMaster.toast.success("Password updated!");
+        else BillMaster.toast.error(result.message || "Failed to update");
       }
 
       function openUserModal() {
@@ -559,7 +618,7 @@
       async function factoryResetDatabase() {
         if (
           confirm(
-            "🛑 ATTENTION: This will permanently delete ALL products, customers, and sales history from the SQL database. This cannot be undone. Proceed?",
+            "ATTENTION: This will permanently delete ALL products, customers, and sales history from the SQL database. This cannot be undone. Proceed?",
           )
         ) {
           const result = await BillMaster.api.get(
